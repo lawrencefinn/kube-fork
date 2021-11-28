@@ -1,0 +1,17 @@
+package $package;
+
+import com.google.protobuf.InvalidProtocolBufferException;
+import com.google.protobuf.util.JsonFormat;
+
+public class $className {
+    public static void main(String[] args) throws InvalidProtocolBufferException {
+        System.out.println("YO");
+#foreach ($param in $params)
+        String ${param.getName()}Str = System.getProperty("$param.getName()");
+        ${param.getType().getName()}.Builder ${param.getName()}Builder = ${param.getType().getName()}.newBuilder();
+        JsonFormat.parser().ignoringUnknownFields().merge(${param.getName()}Str, ${param.getName()}Builder);
+        ${param.getType().getName()} ${param.getName()} = ${param.getName()}Builder.build();
+#end
+        new ${funcClassName}().${funcName}($paramsStr);
+}
+}
