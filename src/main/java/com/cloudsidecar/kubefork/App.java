@@ -1,5 +1,7 @@
 package com.cloudsidecar.kubefork;
 import com.cloudsidecar.kubefork.annotation.ForkableFunction;
+import com.cloudsidecar.kubefork.executor.ExecutorException;
+import com.cloudsidecar.kubefork.executor.Kube;
 import io.kubernetes.client.openapi.ApiClient;
 import io.kubernetes.client.openapi.ApiException;
 import io.kubernetes.client.openapi.Configuration;
@@ -8,6 +10,8 @@ import io.kubernetes.client.openapi.models.V1PodBuilder;
 import io.kubernetes.client.util.Config;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Hello world!
@@ -15,27 +19,9 @@ import java.io.IOException;
  */
 public class App 
 {
-    public static void main( String[] args ) throws IOException, ApiException, InterruptedException {
-        ApiClient client = Config.defaultClient();
-        Configuration.setDefaultApiClient(client);
-
-        CoreV1Api api = new CoreV1Api();
-        var pod =
-                new V1PodBuilder()
-                        .withNewMetadata()
-                        .withName("apod")
-                        .endMetadata()
-                        .withNewSpec()
-                        .addNewContainer()
-                        .withName("www")
-                        .withImage("nginx")
-                        .endContainer()
-                        .endSpec()
-                        .build();
-        api.createNamespacedPod("default", pod, null, null, null);
-        client.getHttpClient().dispatcher().executorService().shutdownNow();
-        client.getHttpClient().connectionPool().evictAll();
-        Thread.sleep(10000);
+    public static void main( String[] args ) throws ExecutorException {
+        var json = "{\"name\": \"poop\"}";
+        new Kube().execute("com.cloudsidecar.dummy.Something", Map.of("arg0", json));
     }
 
     @ForkableFunction(destinationClassName = "Poopers")

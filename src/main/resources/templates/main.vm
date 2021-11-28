@@ -13,5 +13,5 @@ public class $className {
         ${param.getType().getName()} ${param.getName()} = ${param.getName()}Builder.build();
 #end
         new ${funcClassName}().${funcName}($paramsStr);
-}
+    }
 }
