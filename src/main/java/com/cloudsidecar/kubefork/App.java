@@ -1,14 +1,10 @@
 package com.cloudsidecar.kubefork;
 import com.cloudsidecar.kubefork.annotation.ForkableFunction;
-import io.kubernetes.client.*;
 import io.kubernetes.client.openapi.ApiClient;
 import io.kubernetes.client.openapi.ApiException;
 import io.kubernetes.client.openapi.Configuration;
 import io.kubernetes.client.openapi.apis.CoreV1Api;
-import io.kubernetes.client.openapi.models.V1NamespaceList;
-import io.kubernetes.client.openapi.models.V1Pod;
 import io.kubernetes.client.openapi.models.V1PodBuilder;
-import io.kubernetes.client.openapi.models.V1PodList;
 import io.kubernetes.client.util.Config;
 
 import java.io.IOException;
@@ -42,7 +38,7 @@ public class App
         Thread.sleep(10000);
     }
 
-    @ForkableFunction
+    @ForkableFunction(destinationClassName = "Poopers")
     public String Bongo(String inty) {
         System.out.println("Bongo " + inty);
         return inty.toString();
